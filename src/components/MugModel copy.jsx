@@ -1,33 +1,26 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useCustomization } from "../contexts/Customization";
 import * as THREE from "three";
 
 function MugModel(props) {
   const { nodes, materials } = useGLTF("./models/MugModel.gltf");
-  const { material, legs, chairColor, cushionColor, mugTexture } = useCustomization(); // Ajoutez mugTexture
+  const { material, legs, chairColor, cushionColor } = useCustomization();
+  const [newTextureFile, setNewTextureFile] = useState(null);
 
-
-// Couleur de la tasse
-
-// Modifiez le matériau d'origine pour appliquer la couleur personnalisée.
-materials["color-material"].color.set(chairColor.color);
-
-  // Supposons que vous ayez le chemin d'accès à la nouvelle image dans `newTextureImagePath`.
-
-
-  // Chargez la nouvelle texture.
-  const newTexture = new THREE.TextureLoader().load(mugTexture);
-
-  newTexture.flipY = false; // Vous pouvez essayer true si nécessaire.
-
-  // Appliquez la nouvelle texture à la zone d'impression du matériau.
-  materials["map-material"].map = newTexture;
-
-
-
-
-
+  // Gestionnaire de changement de fichier
+  const handleTextureChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const newTexture = new THREE.TextureLoader().load(e.target.result);
+        newTexture.flipY = false; // Vous pouvez essayer true si nécessaire.
+        materials["map-material"].map = newTexture;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <group {...props} dispose={null}>
@@ -66,8 +59,13 @@ materials["color-material"].color.set(chairColor.color);
         material={materials["color-material"]}
         rotation={[0, -0.412, 0]}
       />
+
+      {/* Ajoutez un bouton pour charger un fichier de texture */}
+      <input type="file" accept=".jpg, .jpeg, .png" onChange={handleTextureChange} />
     </group>
   );
 }
 
 export default MugModel;
+
+useGLTF.preload("./models//MugModel.gltf");

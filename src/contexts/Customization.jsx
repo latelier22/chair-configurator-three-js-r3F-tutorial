@@ -77,6 +77,7 @@ export const CustomizationProvider = (props) => {
   const [legs, setLegs] = useState(1);
   const [chairColor, setChairColor] = useState(chairColors[0]);
   const [cushionColor, setCushionColor] = useState(cushionColors[0]);
+  const [mugTexture, setMugTexture] = useState(null); // Ajoutez setMugTexture
 
   return (
     <CustomizationContext.Provider
@@ -91,6 +92,8 @@ export const CustomizationProvider = (props) => {
         cushionColors,
         cushionColor,
         setCushionColor,
+        mugTexture,
+        setMugTexture,
       }}
     >
       {props.children}

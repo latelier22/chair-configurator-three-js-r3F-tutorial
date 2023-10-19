@@ -1,22 +1,24 @@
+import React from "react";
+import UploadTextureButton from "./UploadTextureButton";
 import { useCustomization } from "../contexts/Customization";
 
 const Configurator = () => {
   const {
-    material,
-    setMaterial,
-    legs,
-    setLegs,
     chairColors,
     chairColor,
     setChairColor,
     cushionColors,
     cushionColor,
     setCushionColor,
+    setMugTexture, // Ajoutez cette fonction pour mettre à jour la texture du mug
   } = useCustomization();
+
+  const handleTextureChange = (newTexture) => {
+    setMugTexture(newTexture); // Appelez la fonction pour mettre à jour la texture du mug
+  };
 
   return (
     <div className="configurator">
-
       <div className="configurator__section">
         <div className="configurator__section__title">Chair color</div>
         <div className="configurator__section__values">
@@ -37,7 +39,11 @@ const Configurator = () => {
           ))}
         </div>
       </div>
-      
+
+      <div className="configurator__section">
+        <div className="configurator__section__title">Upload Texture</div>
+        <UploadTextureButton onTextureChange={handleTextureChange} />
+      </div>
     </div>
   );
 };
