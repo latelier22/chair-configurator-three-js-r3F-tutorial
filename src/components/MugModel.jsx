@@ -6,6 +6,7 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 import { useCustomization } from "../contexts/Customization";
+import * as THREE from "three"; // Importez Three.js ici
 
 function MugModel(props) {
   const { nodes, materials } = useGLTF("./models//MugModel.gltf");
@@ -13,6 +14,17 @@ function MugModel(props) {
 
   // Modifiez le matériau d'origine pour appliquer la couleur personnalisée.
   materials["color-material"].color.set(chairColor.color);
+
+
+// Supposons que vous ayez le chemin d'accès à la nouvelle image dans `newTextureImagePath`.
+  const newTextureImagePath = "./impressions/image.png";
+
+  // Chargez la nouvelle texture.
+  const newTexture = new THREE.TextureLoader().load(newTextureImagePath);
+
+  // Appliquez la nouvelle texture à la zone d'impression du matériau.
+  materials["map-material"].map = newTexture;
+
 
   return (
     <group {...props} dispose={null}>
