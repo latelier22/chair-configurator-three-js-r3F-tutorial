@@ -4,6 +4,7 @@ import {
   Stage,
 } from "@react-three/drei";
 import Chair from "./Chair";
+import MugModel from "./MugModel";
 
 const Experience = () => {
   return (
@@ -15,7 +16,8 @@ const Experience = () => {
         rotation={[Math.PI / 8, Math.PI / 4, 0]}
       >
         <Stage environment="city" intensity={0.6} castShadow={false}>
-          <Chair />
+          <MugModel scale={[5, 5, 5]}/>
+          
         </Stage>
         <mesh rotation={[-Math.PI / 2, 0, 0]} position-y={-2}>
           <planeGeometry args={[170, 170]} />
